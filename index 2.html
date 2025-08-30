@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Anniversary Chingching 💕</title>
+<style>
+body {
+    font-family: 'Times New Roman', serif;
+    text-align: center;
+    background: #fff5f8;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+}
+h1 { color: #d6336c; margin-top: 40px; font-size: 2.2em; }
+.quiz-container {
+    margin: 30px auto; max-width: 500px;
+    padding: 20px; background: white;
+    border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+button {
+    background: #d6336c; color: white;
+    border: none; padding: 10px 20px; margin: 10px;
+    border-radius: 8px; cursor: pointer; font-size: 16px;
+    transition: 0.3s;
+}
+button:hover { background: #b52b58; }
+#message { display:none; font-size:18px; margin-top:20px; white-space:pre-line; }
+canvas { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<h1>💖 Happy 1st Anniversary, Chingching 💖</h1>
+
+<div class="quiz-container" id="quiz">
+<h2>Question 1: Sino ang pinaka-love mo? ❤️</h2>
+<button onclick="nextQuestion(0)">Food</button>
+<button onclick="nextQuestion(0)">Sleep</button>
+<button onclick="nextQuestion(1)">Si Rachiee ❤️</button>
+</div>
+
+<p id="message"></p>
+<canvas id="confetti"></canvas>
+
+<!-- YouTube embed for Padaba Taka autoplay hidden -->
+<iframe id="ytplayer" type="text/html" width="0" height="0"
+src="https://www.youtube.com/embed/4KXI9yYKex0?autoplay=1&loop=1&playlist=4KXI9yYKex0&controls=0&mute=0"
+frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<script>
+let currentQ = 0;
+const quiz = document.getElementById('quiz');
+const message = document.getElementById('message');
+
+const questions = [
+  {
+    q: "Sino ang pinaka-love mo? ❤️",
+    a: ["Food","Sleep","Si Rachiee ❤️"],
+    correct: 2
+  },
+  {
+    q: "Anong forever natin? 💕",
+    a: ["1 year lang","Lifetime 💕","Secret"],
+    correct: 1
+  }
+];
+
+function nextQuestion(correctIndex) {
+  currentQ++;
+  if(currentQ < questions.length) {
+    const q = questions[currentQ];
+    quiz.innerHTML = `<h2>${q.q}</h2>` +
+      q.a.map((choice,i)=>`<button onclick="nextQuestion(${i})">${choice}</button>`).join('');
+  } else {
+    showMessage();
+  }
+}
+
+function showMessage() {
+  quiz.style.display="none";
+  message.style.display="block";
+  message.innerText = `HAPPY ANNIVERSARY MAHAL KO, PADABA KO, BEBI, MY WIFE 🥺💕
+
+Happy Anniversary Chingching! I love you forever 💖 – Rachiee`;
+  startConfetti();
+}
+
+// Confetti
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const pieces = Array.from({length:100}).map(()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*10+5,d:Math.random()*50,color:`hsl(${Math.random()*360},100%,50%)`,tilt:Math.random()*10-10}));
+function drawConfetti() { ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,2*Math.PI);ctx.fillStyle=p.color;ctx.fill();}); updateConfetti(); }
+function updateConfetti() { pieces.forEach(p=>{p.y+=Math.cos(p.d)+1+p.r/2; p.x+=Math.sin(0.5); if(p.y>canvas.height){p.x=Math.random()*canvas.width;p.y=-10;}});}
+function startConfetti(){setInterval(drawConfetti,20);}
+</script>
+
+</body>
+</html>
